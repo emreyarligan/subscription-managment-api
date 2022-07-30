@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->uuid('device_uuid');
+            $table->uuid('device_uuid')->unique();
             $table->integer('app_id');
             $table->enum('language', ['en', 'tr']);
             $table->enum('os', ['android', 'ios']);
