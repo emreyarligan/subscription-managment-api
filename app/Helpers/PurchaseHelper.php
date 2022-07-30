@@ -30,7 +30,7 @@ class PurchaseHelper
             array_push(
                 $responseInf,
                 [
-                    'expire-date' =>$date->format('Y-m-d H:i:sP')
+                    'expire-date' =>$date->format('Y-m-d H:i:s')
                 ]
             );
         }
