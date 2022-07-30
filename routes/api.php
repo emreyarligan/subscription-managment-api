@@ -16,7 +16,7 @@ use App\Http\Controllers\ApiController;
 |
 */
 
-Route::get('/register',[ApiController::class, 'register']);
+Route::put('/register',[ApiController::class, 'register']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
