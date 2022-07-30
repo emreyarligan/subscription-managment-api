@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 use App\Models\Device;
+use App\Http\Requests\RegisterRequest;
 
-use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        Device::updateOrCreate(
+        return Device::updateOrCreate(
             [
                 'device_uuid' => $request->device_uuid
             ],
