@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('app_id');
             $table->enum('language', ['en', 'tr']);
             $table->enum('os', ['android', 'ios']);
+            $table->uuid('client_token');
             $table->timestamps();
 
             $table->index('device_uuid');
