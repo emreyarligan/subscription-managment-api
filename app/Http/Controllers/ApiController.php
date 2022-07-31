@@ -40,9 +40,15 @@ class ApiController extends Controller
 
         if ($mockResponse['status']) {
             
-            return Subscription::updateOrCreate(
-                ['receipt_id' => $request->receiptId, 'client_token' => $request->clientToken],
-                ['expire_date' => $mockResponse['expire-date'],'api_result' => json_encode($mockResponse)]
+            return Subscription::firstOrCreate(
+                [
+                    'client_token' => $request->clientToken,
+                    'receipt_id' => $request->receiptId,
+                ],
+                [
+                    'expire_date' => $mockResponse['expire-date'],
+                    'api_result' => json_encode($mockResponse)
+                ],
             );
 
         } else {
