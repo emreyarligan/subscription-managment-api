@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\PurchaseHistory;
+use App\Models\Subscriptions;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Helpers\PurchaseHelper;
@@ -37,7 +38,20 @@ class ApiController extends Controller
         self::checkClientTokenExists($request->clientToken);
 
         $mockResponse = self::mockValidation($request->clientToken,$request->receiptId);
-            
+        $checkPurchaseHistory =  PurchaseHistory::where(['client_token' => $request->clientToken,'receipt_id' => $request->receiptId])->first();
+
+        // if client_token and receipt_id are used, the subscription will not be updated. receipt_id must be different...
+        if (!$checkPurchaseHistory) { 
+            Subscriptions::updateOrCreate(
+                [
+                    'client_token' => $request->clientToken,
+                ],
+                [
+                    'expire_date' => $mockResponse['expire-date'],
+                ],
+            );
+        }
+
         return PurchaseHistory::firstOrCreate(
             [
                 'client_token' => $request->clientToken,
