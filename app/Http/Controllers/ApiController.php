@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Device;
-use App\Models\Subscription;
+use App\Models\PurchaseHistory;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Helpers\PurchaseHelper;
@@ -38,7 +38,7 @@ class ApiController extends Controller
 
         $mockResponse = self::mockValidation($request->clientToken,$request->receiptId);
             
-        return Subscription::firstOrCreate(
+        return PurchaseHistory::firstOrCreate(
             [
                 'client_token' => $request->clientToken,
                 'receipt_id' => $request->receiptId,
