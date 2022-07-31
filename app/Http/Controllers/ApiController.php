@@ -36,33 +36,18 @@ class ApiController extends Controller
     {
         self::checkClientTokenExists($request->clientToken);
 
-        $mockResponse = PurchaseHelper::checkGoogleMock(md5($request->receiptId));
-
-        if ($mockResponse['status']) {
+        $mockResponse = self::mockValidation($request->clientToken,$request->receiptId);
             
-            return Subscription::firstOrCreate(
-                [
-                    'client_token' => $request->clientToken,
-                    'receipt_id' => $request->receiptId,
-                ],
-                [
-                    'expire_date' => $mockResponse['expire-date'],
-                    'api_result' => json_encode($mockResponse)
-                ],
-            );
-
-        } else {
-
-            throw new HttpResponseException(response()->json([
-                'success'   => false,
-                'message'   => 'Last digit of hashed data must be odd',
-                'data'      => [
-                    'receiptId'         => $request->receiptId,
-                    'hashedReceiptId'   => md5($request->receiptId)
-                ]
-            ]));
-
-        }
+        return Subscription::firstOrCreate(
+            [
+                'client_token' => $request->clientToken,
+                'receipt_id' => $request->receiptId,
+            ],
+            [
+                'expire_date' => $mockResponse['expire-date'],
+                'api_result' => json_encode($mockResponse)
+            ],
+        );
 
     }
 
@@ -81,6 +66,34 @@ class ApiController extends Controller
         }
 
         return true;
+
+    }
+
+    private function mockValidation($clientToken,$receiptId)
+    {
+        $providerMatch = [
+            'ios'       => 'checkIOSMock',
+            'android'   => 'checkGoogleMock'
+        ];
+
+        $deviceOS = Device::where('client_token',$clientToken)->first()->os;
+
+        $mockFunctionName = $providerMatch[$deviceOS];
+
+        $mockResponse = PurchaseHelper::{$mockFunctionName}(md5($receiptId));
+
+        if(!$mockResponse['status']) {
+            throw new HttpResponseException(response()->json([
+                'success'   => false,
+                'message'   => 'Last digit of hashed data must be odd',
+                'data'      => [
+                    'receiptId'         => $receiptId,
+                    'hashedReceiptId'   => md5($receiptId)
+                ]
+            ]));
+        }
+
+        return $mockResponse;
 
     }
 
