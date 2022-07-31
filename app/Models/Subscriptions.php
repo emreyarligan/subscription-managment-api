@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Subscriptions extends Model
 {
     use HasFactory;
-    protected $fillable = ['client_token','expire_date'];
+    protected $fillable = ['client_token','expire_date','status'];
 }

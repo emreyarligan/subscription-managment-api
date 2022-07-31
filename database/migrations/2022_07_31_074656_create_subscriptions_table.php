@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('client_token')->unique();
             $table->dateTime('expire_date');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

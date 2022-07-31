@@ -47,7 +47,8 @@ class ApiController extends Controller
                     'client_token' => $request->clientToken,
                 ],
                 [
-                    'expire_date' => $mockResponse['expire-date'],
+                    'status'        => true,
+                    'expire_date'   => $mockResponse['expire-date'],
                 ],
             );
         }
