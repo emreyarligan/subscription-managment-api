@@ -24,15 +24,8 @@ class PurchaseHelper
         ];
 
         if ($isOdd) {
-
             $date = new \DateTime('+1 month', new \DateTimeZone('GMT-6'));
-
-            array_push(
-                $responseInf,
-                [
-                    'expire-date' =>$date->format('Y-m-d H:i:s')
-                ]
-            );
+            $responseInf['expire-date'] = $date->format('Y-m-d H:i:s');
         }
 
         return $responseInf;
