@@ -18,6 +18,7 @@ use App\Http\Controllers\ApiController;
 
 Route::put('/register',[ApiController::class, 'register']);
 Route::put('/purchase',[ApiController::class, 'purchase']);
+Route::get('/check-subscription',[ApiController::class, 'checkSubscriptionStatus']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

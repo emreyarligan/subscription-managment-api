@@ -6,6 +6,7 @@ use App\Models\PurchaseHistory;
 use App\Models\Subscriptions;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\PurchaseRequest;
+use App\Http\Requests\CheckSubscriptionStatusRequest;
 use App\Helpers\PurchaseHelper;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Str;
@@ -110,6 +111,46 @@ class ApiController extends Controller
 
         return $mockResponse;
 
+    }
+
+    public function checkSubscriptionStatus(CheckSubscriptionStatusRequest $request)
+    {
+        $json = [];
+
+        $subscription = Subscriptions::where('client_token',$request->clientToken)->first();
+
+        if ($subscription) { // if the subscription is not cancelled, check the expire date
+
+            if ($subscription->status) {
+
+                $active = strtotime($subscription->expire_date) > time();
+
+                $json = [
+                    'subscriptionStatus'    => $active,
+                    'message'               => (($active) ? 'Subscription is active until ' : 'subscription expired on ').$subscription->expire_date,
+                    'expire_date'           => $subscription->expire_date,
+                    'expire_date_unixtime'  => strtotime($subscription->expire_date),
+                ];
+
+            } else { // if the subscription is cancelled
+
+                $json = [
+                    'subscriptionStatus'            => false,
+                    'message'                       => 'Subscription is cancelled on '.$subscription->expire_date,
+                    'cancellation_date'             => $subscription->cancellation_date,
+                    'cancellation_date_unixtime'    => strtotime($subscription->cancellation_date),
+                ];
+
+            }
+            
+        } else {
+            $json = [
+                'subscriptionStatus'    => false,
+                'message'               => 'No subscription found with this Client Token',
+            ];
+        }
+
+        throw new HttpResponseException(response()->json($json));
     }
 
 }
