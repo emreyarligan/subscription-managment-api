@@ -1,7 +1,7 @@
 
 
 ## API Reference
-Postman collection available in the repo (subscription-managment-api.postman_collection.json)
+Postman collection is available in the repo (subscription-managment-api.postman_collection.json)
 #### Register a device
 
 
