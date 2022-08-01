@@ -87,6 +87,8 @@ class ApiController extends Controller
 
     private function mockValidation($clientToken,$receiptId)
     {
+        // It would be made with Strategy Pattern in the real scenarios. We have 2 mock verification functions and those have same functionality...
+
         $providerMatch = [
             'ios'       => 'checkIOSMock',
             'android'   => 'checkGoogleMock'
