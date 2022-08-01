@@ -20,6 +20,8 @@ return new class extends Migration
             $table->dateTime('cancellation_date')->nullable();
             $table->boolean('status');
             $table->timestamps();
+
+            $table->index('client_token','expire_date');
         });
     }
 
