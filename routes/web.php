@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WorkerController;
+use App\Models\Logs;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/worker/prepare-queue',[WorkerController::class, 'prepareQueue']);
+
+Route::get('/event-logs',function() {
+    print_r(Logs::all()->toArray());
+});

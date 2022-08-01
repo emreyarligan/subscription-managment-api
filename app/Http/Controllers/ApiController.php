@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\CheckSubscriptionStatusRequest;
 use App\Helpers\PurchaseHelper;
+use App\Helpers\EventLoggingHelper;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Str;
 
@@ -43,6 +44,10 @@ class ApiController extends Controller
 
         // if client_token and receipt_id are used, the subscription will not be updated. receipt_id must be different...
         if (!$checkPurchaseHistory) { 
+
+            $eventType = (!Subscriptions::where('client_token',$request->clientToken)->first()) ? 'subscription_started' : 'subscription_updated_by_user_request';
+            EventLoggingHelper::setLog($eventType,$request->clientToken,$mockResponse['expire-date']);
+
             Subscriptions::updateOrCreate(
                 [
                     'client_token' => $request->clientToken,
