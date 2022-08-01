@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "73f8e906-8e6e-4c9e-a870-6aebd4cd5b8e",
+		"name": "Mobile Application Subscription Managment API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_url}}/api/register?device_uuid=124ea042-0b13-1eea-9de8-217fe37c4c15&app_id=123422&language=en&os=android",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "device_uuid",
+							"value": "124ea042-0b13-1eea-9de8-217fe37c4c15",
+							"description": "required, uuid"
+						},
+						{
+							"key": "app_id",
+							"value": "123422",
+							"description": "required, integer"
+						},
+						{
+							"key": "language",
+							"value": "en",
+							"description": "required, 'tr' or 'en'"
+						},
+						{
+							"key": "os",
+							"value": "android",
+							"description": "required,  'ios' or 'android'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/purchase?receiptId=12345567&clientToken=client token uuid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"purchase"
+					],
+					"query": [
+						{
+							"key": "receiptId",
+							"value": "12345567",
+							"description": "required, integer"
+						},
+						{
+							"key": "clientToken",
+							"value": "client token uuid",
+							"description": "required, uuid"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/check-subscription?clientToken=client token uuid",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"check-subscription"
+					],
+					"query": [
+						{
+							"key": "clientToken",
+							"value": "client token uuid",
+							"description": "required, uuid"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Worker) Prepare Queue",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/worker/prepare-queue",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"worker",
+						"prepare-queue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Logs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/event-logs",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"event-logs"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000"
+		}
+	]
+}
