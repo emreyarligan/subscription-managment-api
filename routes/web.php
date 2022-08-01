@@ -22,5 +22,5 @@ Route::get('/', function () {
 Route::get('/worker/prepare-queue',[WorkerController::class, 'prepareQueue']);
 
 Route::get('/event-logs',function() {
-    print_r(Logs::all()->toArray());
+    return response()->json(Logs::all()->toArray());
 });
