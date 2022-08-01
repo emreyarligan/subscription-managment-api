@@ -157,7 +157,7 @@ class ApiController extends Controller
             ];
         }
 
-        throw new HttpResponseException(response()->json($json));
+        return response()->json($json);
     }
 
 }

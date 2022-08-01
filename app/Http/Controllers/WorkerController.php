@@ -22,17 +22,17 @@ class WorkerController extends Controller
                 SubscriptionPolling::dispatch($subscription['client_token'])->onQueue('subscriptionPolling');
             }
 
-            throw new HttpResponseException(response()->json([
+            return response()->json([
                 'success'   => true,
                 'message'   => count($subscriptions).' data added to the subscriptionPolling quene',
-            ]));
+            ]);
         }
 
 
-        throw new HttpResponseException(response()->json([
+        return response()->json([
             'success'   => false,
             'message'   => 'There is no active and expired subscription',
-        ]));
+        ]);
         
     }
 }
