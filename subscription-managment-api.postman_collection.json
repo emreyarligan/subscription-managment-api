@@ -80,7 +80,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Check Subscription",
 			"request": {
 				"method": "GET",
 				"header": [],
