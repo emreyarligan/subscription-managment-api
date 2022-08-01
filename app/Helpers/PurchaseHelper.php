@@ -31,4 +31,10 @@ class PurchaseHelper
         return $responseInf;
     }
 
+    public static function checkLastTwoDigitsDivisibleBySix($receiptId)
+    {
+        $lastTwoDigits = substr($receiptId, -2);
+        return (intval($lastTwoDigits) % 6 == 0);
+    }
+
 }
